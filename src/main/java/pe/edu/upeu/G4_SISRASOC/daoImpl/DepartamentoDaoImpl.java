@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import pe.edu.upeu.G4_SISRASOC.dao.DepartamentoDao;
 import pe.edu.upeu.G4_SISRASOC.entity.Departamento;
+
 @Repository
 public class DepartamentoDaoImpl implements DepartamentoDao{
 	@Autowired
@@ -16,8 +17,10 @@ public class DepartamentoDaoImpl implements DepartamentoDao{
 	@Override
 	public int create(Departamento d) {
 		// TODO Auto-generated method stub
-		return 0;
-	}
+		String SQL = "insert into departamento(depart_name) values(?)";
+				  
+		return jdbcTemplate.update(SQL,d.getDepart_name()); 
+}
 
 	@Override
 	public int update(Departamento d) {
@@ -28,7 +31,8 @@ public class DepartamentoDaoImpl implements DepartamentoDao{
 	@Override
 	public int delete(int id) {
 		// TODO Auto-generated method stub
-		return 0;
+		String SQL = "delete from departamento where id_departamento=?";
+		return jdbcTemplate.update(SQL, id);
 	}
 
 	@Override
