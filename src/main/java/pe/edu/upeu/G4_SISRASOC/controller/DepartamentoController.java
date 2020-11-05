@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,12 +19,13 @@ import pe.edu.upeu.G4_SISRASOC.service.DepartamentoService;
 
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200",allowedHeaders = "*")
 @RequestMapping("/departamento")
 public class DepartamentoController {
 	@Autowired
 	private DepartamentoService departamentoService;
 	@GetMapping("/all")
-	public List<Map<String, Object>> listar() {
+	public Map<String, Object> listar() {
 		return departamentoService.readAll();
 	}
 	

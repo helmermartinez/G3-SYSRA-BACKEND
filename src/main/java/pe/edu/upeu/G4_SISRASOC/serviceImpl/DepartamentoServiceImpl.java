@@ -38,10 +38,13 @@ public class DepartamentoServiceImpl implements DepartamentoService{
 	}
 
 	@Override
-	public List<Map<String, Object>> readAll() {
+	public Map<String, Object> readAll() {
 		// TODO Auto-generated method stub
 		return departamentodao.readAll();
 	}
+
+	
+	
 	
 
 }

@@ -10,6 +10,6 @@ public interface DepartamentoService {
 	int update (Departamento d);
 	int delete (int id);
 	Departamento read (int id);
-	List<Map<String, Object>> readAll();
+	Map<String, Object> readAll();
 
 }

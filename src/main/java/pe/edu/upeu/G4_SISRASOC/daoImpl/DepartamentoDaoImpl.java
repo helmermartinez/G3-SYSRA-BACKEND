@@ -4,9 +4,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.ColumnMapRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.SqlOutParameter;
+import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Repository;
 
+import oracle.jdbc.OracleTypes;
 import pe.edu.upeu.G4_SISRASOC.dao.DepartamentoDao;
 import pe.edu.upeu.G4_SISRASOC.entity.Departamento;
 
@@ -14,6 +18,7 @@ import pe.edu.upeu.G4_SISRASOC.entity.Departamento;
 public class DepartamentoDaoImpl implements DepartamentoDao{
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
+	private SimpleJdbcCall simpleJdbcCall;
 	@Override
 	public int create(Departamento d) {
 		// TODO Auto-generated method stub
@@ -42,9 +47,13 @@ public class DepartamentoDaoImpl implements DepartamentoDao{
 	}
 
 	@Override
-	public List<Map<String, Object>> readAll() {
-		// TODO Auto-generated method stub
-		return jdbcTemplate.queryForList("Select * from departamento");
+	public Map<String, Object> readAll() {
+		simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)
+				.withCatalogName("pk_departamento") //nombre del paquete
+				.withProcedureName("sp_listar_departamento") //nombre del procedimiento
+				.declareParameters(new SqlOutParameter("cursor_departamento", OracleTypes.CURSOR, new ColumnMapRowMapper()));
+				return simpleJdbcCall.execute();
+
 	}
 
 }
