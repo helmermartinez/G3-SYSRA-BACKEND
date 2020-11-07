@@ -9,7 +9,7 @@ public interface DepartamentoService {
 	int create (Departamento d);
 	int update (Departamento d);
 	int delete (int id);
-	Departamento read (int id);
+	Map<String, Object>read (int id);
 	Map<String, Object> readAll();
 
 }

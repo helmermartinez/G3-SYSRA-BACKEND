@@ -32,7 +32,7 @@ public class DepartamentoServiceImpl implements DepartamentoService{
 	}
 
 	@Override
-	public Departamento read(int id) {
+	public Map<String, Object> read(int id) {
 		// TODO Auto-generated method stub
 		return departamentodao.read(id);
 	}

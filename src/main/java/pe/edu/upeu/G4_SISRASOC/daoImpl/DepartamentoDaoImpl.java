@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.ColumnMapRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.SqlOutParameter;
+import org.springframework.jdbc.core.SqlParameter;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 import org.springframework.stereotype.Repository;
 
@@ -22,15 +25,16 @@ public class DepartamentoDaoImpl implements DepartamentoDao{
 	@Override
 	public int create(Departamento d) {
 		// TODO Auto-generated method stub
-		String SQL = "insert into departamento(depart_name) values(?)";
+		
 				  
-		return jdbcTemplate.update(SQL,d.getDepart_name()); 
+		return jdbcTemplate.update("call pk_departamento.sp_create_departamento(?)", d.getDepart_name()); 
 }
 
 	@Override
 	public int update(Departamento d) {
 		// TODO Auto-generated method stub
-		return 0;
+		System.out.print(d.getDepart_name());
+		return jdbcTemplate.update("call pk_departamento.sp_update_departamento(?,?)",d.getId_departamento(),d.getDepart_name());
 	}
 
 	@Override
@@ -41,9 +45,15 @@ public class DepartamentoDaoImpl implements DepartamentoDao{
 	}
 
 	@Override
-	public Departamento read(int id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Map<String, Object>read(int id) {
+		System.out.println(id); 
+		simpleJdbcCall = new SimpleJdbcCall(jdbcTemplate)			
+		.withCatalogName("pk_departamento") //nombre del paquete
+		.withProcedureName("sp_read_departamento") //nombre del procedimiento
+		.declareParameters(new SqlOutParameter("t_departamento", OracleTypes.REF_CURSOR, new ColumnMapRowMapper()), new SqlParameter("iddep", OracleTypes.NUMBER));
+		SqlParameterSource in = new MapSqlParameterSource().addValue("iddep", id);
+
+		return simpleJdbcCall.execute(in);
 	}
 
 	@Override
