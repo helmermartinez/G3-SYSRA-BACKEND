@@ -33,6 +33,7 @@ public class DepartamentoDaoImpl implements DepartamentoDao{
 	@Override
 	public int update(Departamento d) {
 		// TODO Auto-generated method stub
+		System.out.println(d.getId_departamento());
 		System.out.print(d.getDepart_name());
 		return jdbcTemplate.update("call pk_departamento.sp_update_departamento(?,?)",d.getId_departamento(),d.getDepart_name());
 	}

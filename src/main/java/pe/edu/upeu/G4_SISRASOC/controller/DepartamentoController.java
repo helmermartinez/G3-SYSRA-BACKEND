@@ -41,12 +41,11 @@ public class DepartamentoController {
 		
 	}		
 	@PutMapping("/update/{id}")
-	public String edit(@RequestBody Departamento d, @PathVariable int id) {
+	public int update(@RequestBody Departamento d, @PathVariable int id) {
 		
-		Departamento departamento = new Departamento();
-		departamento.setId_departamento(id);
-		departamento.setDepart_name(d.getDepart_name());
-		return "Editado exitoso";
+		d.setId_departamento(id);
+		
+		return departamentoService.update(d);
 	}
 	@GetMapping("/{id}")
 	public Map<String, Object> read(@PathVariable int id ) {
