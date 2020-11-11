@@ -25,8 +25,8 @@ public class DepartamentoDaoImpl implements DepartamentoDao{
 	@Override
 	public int create(Departamento d) {
 		// TODO Auto-generated method stub
+		System.out.println(d.getDepart_name());
 		
-				  
 		return jdbcTemplate.update("call pk_departamento.sp_create_departamento(?)", d.getDepart_name()); 
 }
 

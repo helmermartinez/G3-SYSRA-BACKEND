@@ -20,7 +20,7 @@ import pe.edu.upeu.G4_SISRASOC.service.DepartamentoService;
 
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200",allowedHeaders = "*")
+@CrossOrigin(origins = "*")
 @RequestMapping("/departamento")
 public class DepartamentoController {
 	@Autowired
@@ -35,7 +35,7 @@ public class DepartamentoController {
 		return departamentoService.delete(id);
 		
 	}
-	@PostMapping("/create")
+	@PostMapping("/add")
 	public int create(@RequestBody Departamento d) {
 		return departamentoService.create(d);	
 		
